@@ -91,6 +91,7 @@ html {
 
 .time-box:first-of-type{
     background-color: transparent;
+    width: 220px;
 }
 
 .time-box input {

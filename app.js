@@ -1,4 +1,3 @@
-
 /*-----------VARIABLE----------*/
 
 const carryBitTime = 60;
@@ -9,12 +8,34 @@ let prevSecond, prevMinute, prevHour;
 let finishUpdate = false;
 let stopUpdate = false;
 let isReverseCount;
+let inInitState = true;
 
+/*-------KEY_EVENT_LISTENER-----*/
 
-/*--------STATE_HANDLER--------*/
+document.onkeydown = (event) => {
+    var event = event || window.event;  // 标准化事件对象
+    if (event.keyCode === 13) {
+        // space
+        if (inInitState)
+            initHandler();
+    } else if (event.keyCode === 32) {
+        // enter
+        if (!inInitState) {
+            if (!stopUpdate)
+                pauseHandler();
+            else
+                resumeHandler();
+        }
+    }
+
+}
+
+/*---------STATE_HANDLER---------*/
 
 
 const initHandler = (event) => {
+    document.getElementById('clear').innerHTML = '清空正计时';
+    document.getElementById('hint').innerHTML = '正在正计时';
     isReverseCount = false;
     initState()
     setZeroTime()
@@ -22,6 +43,8 @@ const initHandler = (event) => {
 }
 
 const submitTimeHandler = () => {
+    document.getElementById('clear').innerHTML = '清空倒计时';
+    document.getElementById('hint').innerHTML = '正在倒计时';
     initState()
     isReverseCount = true;
 
@@ -44,17 +67,26 @@ const submitTimeHandler = () => {
     prevMinute = userMinute;
     prevHour = userHour;
     setPrevTime()
+    displayStaticHintTime()
     createReverseCounter()
 }
 
 
 const pauseHandler = () => {
+    if (isReverseCount) {
+        document.getElementById('hint').innerHTML = '暂停倒计时';
+        displayStaticHintTime();
+    } else document.getElementById('hint').innerHTML = '暂停正计时';
     setAppear('resume')
     setDisappear('pause')
     stopUpdate = true;
 }
 
 const resumeHandler = () => {
+    if (isReverseCount) {
+        document.getElementById('hint').innerHTML = '正在倒计时';
+        displayStaticHintTime();
+    } else document.getElementById('hint').innerHTML = '正在正计时';
     setAppear('pause')
     setDisappear('resume')
     stopUpdate = false;
@@ -72,11 +104,14 @@ const clearCountHandler = () => {
 
 const resetCountHandler = () => {
     if (!isReverseCount) {
+        document.getElementById('hint').innerHTML = '正在正计时';
         setZeroTime()
         stopUpdate = false;
         finishUpdate = true;
         createCounter()
     } else {
+        document.getElementById('hint').innerHTML = '正在倒计时';
+        displayStaticHintTime()
         setPrevTime();
         stopUpdate = false;
         finishUpdate = true;
@@ -101,9 +136,11 @@ const createCounter = () => {
             }
         }
         displayTime();
+        displayHintTime();
         if (hour === maximumHour || finishUpdate) {
             setZeroTime()
-            displayTime()
+            displayTime();
+            displayHintTime();
             finishUpdate = false;
             clearInterval(timerSecond);
         }
@@ -130,10 +167,11 @@ const createReverseCounter = () => {
             }
         }
         displayTime();
-        if (hour === maximumHour || finishUpdate ) {
+        if (hour === maximumHour || finishUpdate) {
             setPrevTime()
-            if(!isReverseCount && !stopUpdate && finishUpdate ) setZeroTime()
+            if (!isReverseCount && !stopUpdate && finishUpdate) setZeroTime()
             displayTime()
+            document.getElementById('hint').innerHTML += ' 已结束';
             finishUpdate = false;
             clearInterval(timerSecond);
         }
@@ -152,6 +190,32 @@ const displayTime = () => {
     if (second < 10) timeString += '0';
     timeString += second.toString();
     timeElement.innerHTML = timeString;
+}
+
+const displayHintTime = () => {
+    let hintElement = document.getElementById('hint');
+    let timeString = '';
+    if (hour < 10) timeString += '0';
+    timeString = timeString + hour.toString() + ':';
+    if (minute < 10) timeString += '0';
+    timeString = timeString + minute.toString() + ':'
+    if (second < 10) timeString += '0';
+    timeString += second.toString();
+    hintElement.innerHTML =
+        hintElement.innerHTML.toString().trim().split(' ')[0] + ' ' + timeString;
+}
+
+const displayStaticHintTime = () => {
+    let hintElement = document.getElementById('hint');
+    let timeString = '';
+    if (prevHour < 10) timeString += '0';
+    timeString = timeString + prevHour.toString() + ':';
+    if (prevMinute < 10) timeString += '0';
+    timeString = timeString + prevMinute.toString() + ':'
+    if (prevSecond < 10) timeString += '0';
+    timeString += prevSecond.toString();
+    hintElement.innerHTML =
+        hintElement.innerHTML.toString().trim().split(' ')[0] + ' ' + timeString;
 }
 
 const setDisappear = (id) => {
@@ -175,6 +239,7 @@ const setPrevTime = () => {
     second = prevSecond;
     minute = prevMinute;
     hour = prevHour;
+
     if (!stopUpdate) {
         second--;
         if (second === -1) {
@@ -197,6 +262,7 @@ const setPrevTime = () => {
 
 
 const returnInitState = () => {
+    inInitState = true;
     setAppear('hour-box')
     setAppear('minute-box')
     setAppear('second-box')
@@ -212,6 +278,7 @@ const returnInitState = () => {
 }
 
 const initState = () => {
+    inInitState = false;
     setDisappear('hour-box')
     setDisappear('minute-box')
     setDisappear('second-box')
