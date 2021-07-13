@@ -32,20 +32,22 @@
                 </button>
 
                 <div class="time-box radius-effect shadow-effect" id="hour-box">
-                    <input value="0" id="hour" type="text" name=""/>
-                    <!--                    在这里随便试试-->
+                    <input value="0" id="hour" type="text" name="hour"
+                           onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"/>
                     <span>
                     时
                 </span>
                 </div>
                 <div class="time-box radius-effect shadow-effect" id="minute-box">
-                    <input value="0" id="minute" type="text" name=""/>
+                    <input value="0" id="minute" type="text" name="minute"
+                           onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"/>
                     <span class="time-label">
                     分
                 </span>
                 </div>
                 <div class="time-box radius-effect shadow-effect" id="second-box">
-                    <input value="0" id="second" type="text" name=""/>
+                    <input value="0" id="second" type="text" name="second"
+                           onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"/>
                     <span>
                     秒
                 </span>
@@ -55,7 +57,7 @@
                     开始正计时
                 </button>
                 <button class="function-box radius-effect shadow-effect"
-                        type="button" value="开始倒计时" id="countdown">
+                        type="button" value="开始倒计时" id="countdown" onclick="submitTimeHandler()">
                     开始倒计时
                 </button>
 

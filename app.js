@@ -14,10 +14,11 @@ const returnInitState = () => {
     setAppear('countup')
     setAppear('countdown')
 
-
     setDisappear('clear')
     setDisappear('restart')
     setDisappear('hint')
+    setDisappear('pause')
+    setDisappear('resume')
 
 }
 
@@ -27,6 +28,7 @@ const initState = () => {
     setDisappear('second-box')
     setDisappear('countup')
     setDisappear('countdown')
+    setDisappear('resume')
 
     setAppear('clear')
     setAppear('restart')
@@ -55,6 +57,7 @@ const initHandler = (event) => {
 
 const clearCountHandler = () => {
     setZeroTime()
+    stopUpdate = false;
     finishUpdate = true;
     displayTime()
     returnInitState()
@@ -62,6 +65,7 @@ const clearCountHandler = () => {
 
 const resetCountHandler = () => {
     setZeroTime()
+    stopUpdate = false;
     finishUpdate = true;
     createCounter()
 }
@@ -90,6 +94,58 @@ const createCounter = () => {
     }, secondUnit);
 }
 
+const submitTimeHandler = () => {
+    let userSecond = parseInt(document.getElementById('second').value);
+    let userMinute = parseInt(document.getElementById('minute').value);
+    let userHour = parseInt(document.getElementById('hour').value);
+
+    if(userSecond > 60){
+        userMinute += Math.floor(userSecond / 60);
+        userSecond = userSecond % 60;
+    }
+    if(userMinute > 60){
+        userHour += Math.floor(userMinute / 60);
+        userMinute = userMinute % 60;
+    }
+    console.log(userSecond)
+    console.log(userMinute)
+    console.log(userHour)
+    second = userSecond;
+    minute = userMinute;
+    hour = userHour;
+    createReverseCounter()
+}
+
+const createReverseCounter = () => {
+    let timerSecond = setInterval(() => {
+        if(!stopUpdate) {
+            second--;
+            if (second === -1) {
+                minute--;
+                second = 59;
+            }
+            if (minute === -1) {
+                hour--;
+                minute = 59;
+            }
+            if (hour === -1){
+                setZeroTime()
+                finishUpdate = true;
+            }
+        }
+        displayTime();
+        if (hour === maximumHour || finishUpdate) {
+            setZeroTime()
+            displayTime()
+            finishUpdate = false;
+            clearInterval(timerSecond);
+        }
+    }, secondUnit);
+}
+
+
+
+
 const displayTime = () => {
     let timeElement = document.getElementById('time');
     let timeString = '';
@@ -117,3 +173,5 @@ const setZeroTime = () => {
     minute = 0;
     hour = 0;
 }
+
+
