@@ -1,8 +1,8 @@
 /*---------BASIC-SETTING------*/
 
 * {
-    margin:0 ;
-    padding:0 ;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -18,14 +18,14 @@ html {
 
 /*-----------REUSABLE---------*/
 
-.row{
+.row {
     max-width: 1140px;
     margin: 0 auto;
 
 }
 
 
-.center-effect{
+.center-effect {
     display: block;
     position: absolute;
     top: 50%;
@@ -33,29 +33,30 @@ html {
     transform: translate(-50%, -50%);
 }
 
-.radius-effect{
+.radius-effect {
     border-radius: 5px;
 
 }
-.shadow-effect{
+
+.shadow-effect {
     box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.1);
 }
 
 /*------------BIG-COUNTER-------------*/
 
 
-.box{
+.box {
     background-color: #F2F4F7;
     width: 1220px;
     height: 510px;
 
 }
 
-.counter{
+.counter {
 
 }
 
-.counter h1{
+.counter h1 {
     font-family: PTMono-Bold, sans-serif !important;
     color: #333333;
     margin-top: 85px;
@@ -67,40 +68,44 @@ html {
 
 /*-------------NAVIGATOR----------*/
 
-.nav_bar{
+.nav_bar {
     display: flex;
     height: 70px;
-    width: auto;
+    width: 1220px;
     background-color: #92a0b6;
     font-family: 'PingFangSC-Regular', serif;
     font-size: 85%;
 }
 
 .time-box {
-    border:none;
+    border: none;
     background-color: #ffffff;
     display: block;
     text-align: center;
     height: 40px;
-    width: 70px;
+    width: 150px;
     margin: auto 0 auto 21px;
     line-height: 40px; /*设置line-height与父级元素的height相等*/
     /*float:left;*/
 }
 
-.time-box input{
+.time-box:first-of-type{
+    background-color: transparent;
+}
+
+.time-box input {
     color: #AFAFAF;
     border: none;
     width: 20px;
 }
 
-.time-label{
+.time-label {
     width: 32px;
     height: 22px;
     text-align: right;
 }
 
-.function-box{
+.function-box {
     border: none;
     color: #fff;
     background-color: #2284e0;
@@ -114,8 +119,28 @@ html {
     /*float:left;*/
 }
 
-.time-box:first-of-type{
-    margin: auto 0 auto 40px;
+.function-box:nth-last-of-type(2) {
+    background-color: #d42e1f;
+    margin: auto 0 auto auto;
+    display: none;
+}
+.function-box:nth-last-of-type(1) {
+    background-color: #f5aa22;
+    margin: auto 40px auto 20px;
+    display: none;
+}
+
+.function-box:first-of-type {
+    display: none;
+}
+.function-box:nth-of-type(2) {
+    display: none;
+}
+
+
+
+.time-box:first-of-type {
+    display: none;
 }
 
 

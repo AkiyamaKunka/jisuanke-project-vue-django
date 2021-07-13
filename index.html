@@ -5,39 +5,74 @@
     <title>JKS-Assignment-1</title>
 
     <link rel="stylesheet" type="text/css" href="style.css">
-
+    <script src="app.js" type="text/javascript"></script>
 </head>
+
 <body>
 <section class="row">
 
     <div class="box center-effect ">
-        <header>
+        <header style="display: flex; justify-content: flex-start">
+
             <form class="nav_bar radius-effect">
-                <div class="time-box radius-effect shadow-effect">
-                    <input value="0" id="hour" type="text" name="">
+
+                <div class="time-box" id="hint">
+                    <span>
+                    now time is
+                </span>
+                </div>
+
+                <button class="function-box radius-effect shadow-effect"
+                        type="button" value="恢复计时器" id="resume" onclick="resumeHandler()">
+                    恢复计时器
+                </button>
+                <button class="function-box radius-effect shadow-effect"
+                        type="button" value="暂停计时器" id="pause" onclick="pauseHandler()">
+                    暂停计时器
+                </button>
+
+                <div class="time-box radius-effect shadow-effect" id="hour-box">
+                    <input value="0" id="hour" type="text" name=""/>
+                    <!--                    在这里随便试试-->
                     <span>
                     时
                 </span>
                 </div>
-                <div class="time-box radius-effect shadow-effect">
-                    <input value="0" id="minute" type="text" name="">
+                <div class="time-box radius-effect shadow-effect" id="minute-box">
+                    <input value="0" id="minute" type="text" name=""/>
                     <span class="time-label">
                     分
                 </span>
                 </div>
-                <div class="time-box radius-effect shadow-effect">
-                    <input value="0" id="second" type="text" name="">
+                <div class="time-box radius-effect shadow-effect" id="second-box">
+                    <input value="0" id="second" type="text" name=""/>
                     <span>
                     秒
                 </span>
                 </div>
-                <input class="function-box radius-effect shadow-effect" type="submit" value="开始正计时">
-                <input class="function-box radius-effect shadow-effect" type="submit" value="开始倒计时">
+                <button class="function-box radius-effect shadow-effect"
+                        type="button" value="开始正计时" onclick="initHandler()" id="countup">
+                    开始正计时
+                </button>
+                <button class="function-box radius-effect shadow-effect"
+                        type="button" value="开始倒计时" id="countdown">
+                    开始倒计时
+                </button>
 
+
+                <button class="function-box radius-effect shadow-effect"
+                        type="button" value="清空X计时" onclick="clearCountHandler()" id="clear">
+                    清空正计时
+                </button>
+                <button class="function-box radius-effect shadow-effect"
+                        type="button" value="重新再计时" id="restart" onclick="resetCountHandler()">
+                    重新再计时
+                </button>
             </form>
+
         </header>
         <div class="counter center-effect radius-effect ">
-            <h1>
+            <h1 id=time>
                 00:00:00
             </h1>
         </div>
