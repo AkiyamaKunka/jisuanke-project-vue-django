@@ -3,9 +3,10 @@ const maximumHour = 100;
 const secondUnit = 1000;
 
 let second, minute, hour;
+let prevSecond, prevMinute, prevHour;
 let finishUpdate = false;
 let stopUpdate = false;
-
+let isReverseCount;
 
 const returnInitState = () => {
     setAppear('hour-box')
@@ -50,6 +51,7 @@ const resumeHandler = () => {
 }
 
 const initHandler = (event) => {
+    isReverseCount = false;
     initState()
     setZeroTime()
     createCounter()
@@ -59,21 +61,15 @@ const clearCountHandler = () => {
     setZeroTime()
     stopUpdate = false;
     finishUpdate = true;
-    displayTime()
+    isReverseCount = false;
     returnInitState()
-}
-
-const resetCountHandler = () => {
-    setZeroTime()
-    stopUpdate = false;
-    finishUpdate = true;
-    createCounter()
+    displayTime()
 }
 
 
 const createCounter = () => {
     let timerSecond = setInterval(() => {
-        if(!stopUpdate) {
+        if (!stopUpdate) {
             second++;
             if (second === carryBitTime) {
                 minute++;
@@ -95,30 +91,50 @@ const createCounter = () => {
 }
 
 const submitTimeHandler = () => {
+    initState()
+    isReverseCount = true;
+
     let userSecond = parseInt(document.getElementById('second').value);
     let userMinute = parseInt(document.getElementById('minute').value);
     let userHour = parseInt(document.getElementById('hour').value);
 
-    if(userSecond > 60){
+    if (userSecond > 60) {
         userMinute += Math.floor(userSecond / 60);
         userSecond = userSecond % 60;
     }
-    if(userMinute > 60){
+    if (userMinute > 60) {
         userHour += Math.floor(userMinute / 60);
         userMinute = userMinute % 60;
     }
     console.log(userSecond)
     console.log(userMinute)
     console.log(userHour)
-    second = userSecond;
-    minute = userMinute;
-    hour = userHour;
+    prevSecond = userSecond;
+    prevMinute = userMinute;
+    prevHour = userHour;
+    setPrevTime()
     createReverseCounter()
 }
 
+const resetCountHandler = () => {
+    if (!isReverseCount) {
+        setZeroTime()
+        stopUpdate = false;
+        finishUpdate = true;
+        createCounter()
+    } else {
+        setPrevTime();
+        stopUpdate = false;
+        finishUpdate = true;
+        createReverseCounter();
+    }
+}
+
 const createReverseCounter = () => {
+
+    displayTime();
     let timerSecond = setInterval(() => {
-        if(!stopUpdate) {
+        if (!stopUpdate) {
             second--;
             if (second === -1) {
                 minute--;
@@ -128,22 +144,21 @@ const createReverseCounter = () => {
                 hour--;
                 minute = 59;
             }
-            if (hour === -1){
+            if (hour === -1) {
                 setZeroTime()
                 finishUpdate = true;
             }
         }
         displayTime();
-        if (hour === maximumHour || finishUpdate) {
-            setZeroTime()
+        if (hour === maximumHour || finishUpdate ) {
+            setPrevTime()
+            if(!isReverseCount && !stopUpdate && finishUpdate ) setZeroTime()
             displayTime()
             finishUpdate = false;
             clearInterval(timerSecond);
         }
     }, secondUnit);
 }
-
-
 
 
 const displayTime = () => {
@@ -172,6 +187,28 @@ const setZeroTime = () => {
     second = 0;
     minute = 0;
     hour = 0;
+}
+
+
+const setPrevTime = () => {
+    second = prevSecond;
+    minute = prevMinute;
+    hour = prevHour;
+    if (!stopUpdate) {
+        second--;
+        if (second === -1) {
+            minute--;
+            second = 59;
+        }
+        if (minute === -1) {
+            hour--;
+            minute = 59;
+        }
+        if (hour === -1) {
+            setZeroTime()
+            finishUpdate = true;
+        }
+    }
 }
 
 
