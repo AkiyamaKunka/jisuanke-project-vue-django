@@ -1,93 +1,24 @@
+
+/*-----------VARIABLE----------*/
+
 const carryBitTime = 60;
 const maximumHour = 100;
 const secondUnit = 1000;
-
 let second, minute, hour;
 let prevSecond, prevMinute, prevHour;
 let finishUpdate = false;
 let stopUpdate = false;
 let isReverseCount;
 
-const returnInitState = () => {
-    setAppear('hour-box')
-    setAppear('minute-box')
-    setAppear('second-box')
-    setAppear('countup')
-    setAppear('countdown')
 
-    setDisappear('clear')
-    setDisappear('restart')
-    setDisappear('hint')
-    setDisappear('pause')
-    setDisappear('resume')
+/*--------STATE_HANDLER--------*/
 
-}
-
-const initState = () => {
-    setDisappear('hour-box')
-    setDisappear('minute-box')
-    setDisappear('second-box')
-    setDisappear('countup')
-    setDisappear('countdown')
-    setDisappear('resume')
-
-    setAppear('clear')
-    setAppear('restart')
-    setAppear('hint')
-    setAppear('pause')
-
-}
-
-const pauseHandler = () => {
-    setAppear('resume')
-    setDisappear('pause')
-    stopUpdate = true;
-}
-
-const resumeHandler = () => {
-    setAppear('pause')
-    setDisappear('resume')
-    stopUpdate = false;
-}
 
 const initHandler = (event) => {
     isReverseCount = false;
     initState()
     setZeroTime()
     createCounter()
-}
-
-const clearCountHandler = () => {
-    setZeroTime()
-    stopUpdate = false;
-    finishUpdate = true;
-    isReverseCount = false;
-    returnInitState()
-    displayTime()
-}
-
-
-const createCounter = () => {
-    let timerSecond = setInterval(() => {
-        if (!stopUpdate) {
-            second++;
-            if (second === carryBitTime) {
-                minute++;
-                second = 0;
-            }
-            if (minute === carryBitTime) {
-                hour++;
-                minute = 0;
-            }
-        }
-        displayTime();
-        if (hour === maximumHour || finishUpdate) {
-            setZeroTime()
-            displayTime()
-            finishUpdate = false;
-            clearInterval(timerSecond);
-        }
-    }, secondUnit);
 }
 
 const submitTimeHandler = () => {
@@ -116,6 +47,29 @@ const submitTimeHandler = () => {
     createReverseCounter()
 }
 
+
+const pauseHandler = () => {
+    setAppear('resume')
+    setDisappear('pause')
+    stopUpdate = true;
+}
+
+const resumeHandler = () => {
+    setAppear('pause')
+    setDisappear('resume')
+    stopUpdate = false;
+}
+
+
+const clearCountHandler = () => {
+    setZeroTime()
+    stopUpdate = false;
+    finishUpdate = true;
+    isReverseCount = false;
+    returnInitState()
+    displayTime()
+}
+
 const resetCountHandler = () => {
     if (!isReverseCount) {
         setZeroTime()
@@ -128,6 +82,32 @@ const resetCountHandler = () => {
         finishUpdate = true;
         createReverseCounter();
     }
+}
+
+/*--------COUNTER_FUNCTION--------*/
+
+
+const createCounter = () => {
+    let timerSecond = setInterval(() => {
+        if (!stopUpdate) {
+            second++;
+            if (second === carryBitTime) {
+                minute++;
+                second = 0;
+            }
+            if (minute === carryBitTime) {
+                hour++;
+                minute = 0;
+            }
+        }
+        displayTime();
+        if (hour === maximumHour || finishUpdate) {
+            setZeroTime()
+            displayTime()
+            finishUpdate = false;
+            clearInterval(timerSecond);
+        }
+    }, secondUnit);
 }
 
 const createReverseCounter = () => {
@@ -160,6 +140,7 @@ const createReverseCounter = () => {
     }, secondUnit);
 }
 
+/*--------REUSABLE_COMPONENT--------*/
 
 const displayTime = () => {
     let timeElement = document.getElementById('time');
@@ -212,3 +193,35 @@ const setPrevTime = () => {
 }
 
 
+/*--------VISIBILITY_SET--------*/
+
+
+const returnInitState = () => {
+    setAppear('hour-box')
+    setAppear('minute-box')
+    setAppear('second-box')
+    setAppear('countup')
+    setAppear('countdown')
+
+    setDisappear('clear')
+    setDisappear('restart')
+    setDisappear('hint')
+    setDisappear('pause')
+    setDisappear('resume')
+
+}
+
+const initState = () => {
+    setDisappear('hour-box')
+    setDisappear('minute-box')
+    setDisappear('second-box')
+    setDisappear('countup')
+    setDisappear('countdown')
+    setDisappear('resume')
+
+    setAppear('clear')
+    setAppear('restart')
+    setAppear('hint')
+    setAppear('pause')
+
+}
