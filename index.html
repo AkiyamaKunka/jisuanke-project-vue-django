@@ -5,7 +5,7 @@
     <title>JKS-Assignment-1</title>
 
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="app.js" type="text/javascript"></script>
+
 </head>
 
 <body>
@@ -30,21 +30,21 @@
                 </button>
 
                 <div class="time-box radius-effect shadow-effect" id="hour-box">
-                    <input value="0" id="hour" type="text" name="hour"
+                    <input  id="hour" type="text" name="hour" placeholder="0" value=""
                            onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"/>
                     <span>
                     时
                 </span>
                 </div>
                 <div class="time-box radius-effect shadow-effect" id="minute-box">
-                    <input value="0" id="minute" type="text" name="minute"
+                    <input  id="minute" type="text" name="minute" placeholder="0" value=""
                            onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"/>
                     <span class="time-label">
                     分
                 </span>
                 </div>
                 <div class="time-box radius-effect shadow-effect" id="second-box">
-                    <input value="0" id="second" type="text" name="second"
+                    <input  id="second" type="text" name="second" placeholder="0" value=""
                            onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"/>
                     <span>
                     秒
@@ -80,6 +80,6 @@
     </div>
 </section>
 
-
+<script src="app.js" type="text/javascript"></script>
 </body>
 </html>

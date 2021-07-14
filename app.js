@@ -48,9 +48,19 @@ const submitTimeHandler = () => {
     initState()
     isReverseCount = true;
 
+
+    // for case that the user do not input any number in <input>
     let userSecond = parseInt(document.getElementById('second').value);
     let userMinute = parseInt(document.getElementById('minute').value);
     let userHour = parseInt(document.getElementById('hour').value);
+    if(document.getElementById('second').value === '')
+        userSecond = +0;
+    if(document.getElementById('minute').value === '')
+        userMinute = +0;
+    if(document.getElementById('hour').value === '')
+        userHour = +0;
+    // case end
+
 
     if (userSecond > 60) {
         // userMinute += Math.floor(userSecond / 60);
@@ -62,9 +72,9 @@ const submitTimeHandler = () => {
         // userMinute = userMinute % 60;
         userMinute = 60;
     }
-    console.log(userSecond)
-    console.log(userMinute)
-    console.log(userHour)
+    // console.log(userSecond)
+    // console.log(userMinute)
+    // console.log(userHour)
     prevSecond = userSecond;
     prevMinute = userMinute;
     prevHour = userHour;
