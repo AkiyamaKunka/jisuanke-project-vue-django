@@ -27,7 +27,6 @@ document.onkeydown = (event) => {
                 resumeHandler();
         }
     }
-
 }
 
 /*---------STATE_HANDLER---------*/
@@ -48,7 +47,6 @@ const submitTimeHandler = () => {
     initState()
     isReverseCount = true;
 
-
     // for case that the user do not input any number in <input>
     let userSecond = parseInt(document.getElementById('second').value);
     let userMinute = parseInt(document.getElementById('minute').value);
@@ -61,20 +59,13 @@ const submitTimeHandler = () => {
         userHour = +0;
     // case end
 
-
     if (userSecond > 60) {
-        // userMinute += Math.floor(userSecond / 60);
-        // userSecond = userSecond % 60;
         userSecond = 60;
     }
     if (userMinute > 60) {
-        // userHour += Math.floor(userMinute / 60);
-        // userMinute = userMinute % 60;
         userMinute = 60;
     }
-    // console.log(userSecond)
-    // console.log(userMinute)
-    // console.log(userHour)
+
     prevSecond = userSecond;
     prevMinute = userMinute;
     prevHour = userHour;
@@ -107,11 +98,19 @@ const resumeHandler = () => {
 
 const clearCountHandler = () => {
     setZeroTime()
+    resetInput()
     stopUpdate = false;
     finishUpdate = true;
     isReverseCount = false;
     returnInitState()
+    console.log("114")
     displayTime()
+}
+
+const resetInput = () => {
+    document.getElementById('hour').value = ''
+    document.getElementById('minute').value = ''
+    document.getElementById('second').value = ''
 }
 
 const resetCountHandler = () => {
@@ -133,9 +132,11 @@ const resetCountHandler = () => {
 
 /*--------COUNTER_FUNCTION--------*/
 
+let timerSecond;
 
 const createCounter = () => {
-    let timerSecond = setInterval(() => {
+    clearInterval(timerSecond);
+    timerSecond = setInterval(() => {
         if (!stopUpdate) {
             second++;
             if (second === carryBitTime) {
@@ -147,10 +148,12 @@ const createCounter = () => {
                 minute = 0;
             }
         }
+        console.log("159")
         displayTime();
         displayHintTime();
         if (hour === maximumHour || finishUpdate) {
             setZeroTime()
+            console.log("163")
             displayTime();
             displayHintTime();
             finishUpdate = false;
@@ -160,9 +163,10 @@ const createCounter = () => {
 }
 
 const createReverseCounter = () => {
-
+    clearInterval(timerSecond);
+    console.log("173")
     displayTime();
-    let timerSecond = setInterval(() => {
+    timerSecond = setInterval(() => {
         if (!stopUpdate) {
             second--;
             if (second === -1) {
@@ -178,10 +182,12 @@ const createReverseCounter = () => {
                 finishUpdate = true;
             }
         }
+        console.log("190")
         displayTime();
         if (hour === maximumHour || finishUpdate) {
             setPrevTime()
             if (!isReverseCount && !stopUpdate && finishUpdate) setZeroTime()
+            console.log("196")
             displayTime()
             document.getElementById('hint').innerHTML += ' 已结束';
             finishUpdate = false;
@@ -213,8 +219,7 @@ const displayHintTime = () => {
     timeString = timeString + minute.toString() + ':'
     if (second < 10) timeString += '0';
     timeString += second.toString();
-    hintElement.innerHTML =
-        hintElement.innerHTML.toString().trim().split(' ')[0] + ' ' + timeString;
+    hintElement.innerHTML = hintElement.innerHTML.toString().trim().split(' ')[0] + ' ' + timeString;
 }
 
 const displayStaticHintTime = () => {
@@ -226,8 +231,7 @@ const displayStaticHintTime = () => {
     timeString = timeString + prevMinute.toString() + ':'
     if (prevSecond < 10) timeString += '0';
     timeString += prevSecond.toString();
-    hintElement.innerHTML =
-        hintElement.innerHTML.toString().trim().split(' ')[0] + ' ' + timeString;
+    hintElement.innerHTML = hintElement.innerHTML.toString().trim().split(' ')[0] + ' ' + timeString;
 }
 
 const setDisappear = (id) => {
@@ -302,5 +306,29 @@ const initState = () => {
     setAppear('restart')
     setAppear('hint')
     setAppear('pause')
-
 }
+//
+// const createSimpleTimer = () => {
+//     let beginTimeInMS = Date.now();
+//     console.log(beginTimeInMS)
+//
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
