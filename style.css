@@ -89,7 +89,7 @@ html {
     /*float:left;*/
 }
 
-.time-box:first-of-type{
+.time-box:first-of-type {
     background-color: transparent;
     width: 220px;
 }
@@ -125,6 +125,7 @@ html {
     margin: auto 0 auto auto;
     display: none;
 }
+
 .function-box:nth-last-of-type(1) {
     background-color: #f5aa22;
     margin: auto 40px auto 20px;
@@ -134,10 +135,10 @@ html {
 .function-box:first-of-type {
     display: none;
 }
+
 .function-box:nth-of-type(2) {
     display: none;
 }
-
 
 
 .time-box:first-of-type {

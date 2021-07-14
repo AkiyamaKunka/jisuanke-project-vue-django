@@ -53,12 +53,14 @@ const submitTimeHandler = () => {
     let userHour = parseInt(document.getElementById('hour').value);
 
     if (userSecond > 60) {
-        userMinute += Math.floor(userSecond / 60);
-        userSecond = userSecond % 60;
+        // userMinute += Math.floor(userSecond / 60);
+        // userSecond = userSecond % 60;
+        userSecond = 60;
     }
     if (userMinute > 60) {
-        userHour += Math.floor(userMinute / 60);
-        userMinute = userMinute % 60;
+        // userHour += Math.floor(userMinute / 60);
+        // userMinute = userMinute % 60;
+        userMinute = 60;
     }
     console.log(userSecond)
     console.log(userMinute)
